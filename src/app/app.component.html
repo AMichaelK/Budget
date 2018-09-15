@@ -1,20 +1,102 @@
-<!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
-  <h1>
-    Welcome to {{ title }}!
-  </h1>
-  <img width="300" alt="Angular Logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
+<link rel="stylesheet" href="https://bootswatch.com/4/minty/bootstrap.min.css">
+<!-- Header -->
+<div class="jumbotron" style="padding: 3rem">
+  <h1 class="display-3, text-center">Budget!</h1>
+  <p class="lead, text-center">From rags to really nice rags.</p>
 </div>
-<h2>Here are some links to help you start: </h2>
-<ul>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/tutorial">Tour of Heroes</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://github.com/angular/angular-cli/wiki">CLI Documentation</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://blog.angular.io/">Angular blog</a></h2>
-  </li>
-</ul>
+<!-- Main entry cards -->
+<div class="container-fluid" style="width: 75%">
+  <div class="card-group">
+    <div class="card text-white bg-primary mb-3">
+      <div class="card-header">Purchases</div>
+      <div class="card-body">
+        <div class="form-group">
+          <label class="col-form-label" for="inputDefault">Item</label>
+          <label *ngIf="!validName" class="axis-control-label" for="inputName" style="color: firebrick">&emsp;Required field*</label>
+          <input type="text" id="inputName" class="form-control" placeholder="What did you buy?">
+        </div>
+        <div class="form-group">
+          <label class="control-label">Price</label>
+          <label *ngIf="!validName" class="axis-control-label" for="inputPrice" style="color: firebrick">&emsp;Required field*</label>
+          <div class="form-group">
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text">$</span>
+              </div>
+              <input type="number" id="inputPrice" class="form-control">
+            </div>
+          </div>
+        </div>
+        <button type="button" class="btn btn-secondary btn-lg btn-block" (click)="addPurchase()">Add purchase</button>
+      </div>
+    </div>
+    <div class="card text-white bg-primary mb-3">
+      <div class="card-header">Account</div>
+      <div class="card-body">
+        <div class="form-group">
+          <label class="control-label" style="margin-top: 0.34rem">Deposit</label>
+          <label *ngIf="!validDeposit" class="axis-control-label" for="inputDeposit" style="color: firebrick">&emsp;Positive numbers only!</label>
+          <div class="form-group">
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text">$</span>
+              </div>
+              <input type="number" id="inputDeposit" class="form-control">
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label">Withdrawal</label>
+          <label *ngIf="!validDeposit" class="axis-control-label" for="inputWithdrawal" style="color: firebrick">&emsp;Positive numbers only!</label>
+          <div class="form-group">
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text">$</span>
+              </div>
+              <input type="number" id="inputWithdrawal" class="form-control">
+            </div>
+          </div>
+        </div>
+        <button type="button" class="btn btn-secondary btn-lg btn-block" (click)="onUpdate()">Update</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Output -->
+<div class="container-fluid" style="width: 85%; margin-top:1.5rem">
+  <div class="card-group">
 
+    <div class="card border-info mb-3" style="max-width: 30rem;">
+      <div class="card-header">Item</div>
+      <div class="card-body">
+        <h6 class="card-title" *ngFor="let item of itemList">{{item.name}}</h6>
+      </div>
+    </div>
+    <div class="card border-info mb-3" style="max-width: 30rem;">
+      <div class="card-header">Price</div>
+      <div class="card-body">
+        <h6 class="card-title" *ngFor="let item of itemList">{{item.cost | currency }}</h6>
+      </div>
+    </div>
+    <div class="card text-white bg-info mb-3" style="max-width: 30rem;">
+      <div class="card-header">Totals</div>
+      <div class="card-body">
+        <h6 class="card-title">Deposits: &emsp;&emsp;{{deposit | currency}}</h6>
+        <h6 class="card-title">Withdrawals: &emsp;&emsp;{{withdrawal | currency}}</h6>
+        <h6 style="color:rgba(223, 23, 23, 0.857)">Expenditure: &nbsp;{{spendingTotal | currency}}</h6>
+      </div>
+      <div class="card-footer">
+        <h6 *ngIf="net==0">Net: {{net | currency}}</h6>
+        <h6 *ngIf="net<0;else other_content" class="card-title" style="color:rgba(191, 29, 29, 0.612)">Net: {{net | currency}}</h6>
+        <!-- The else statement tagged as other_content -->
+        <ng-template #other_content>
+          <h6 *ngIf="net!=0" class="card-title">Net: {{net | currency}}</h6>
+        </ng-template>
+      </div>
+    </div>
+
+
+
+
+  </div>
+</div>
