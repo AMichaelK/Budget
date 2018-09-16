@@ -1,18 +1,22 @@
-import { Component, OnInit, Injectable, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-item',
   templateUrl: './item.component.html',
   styleUrls: ['./item.component.scss']
 })
-@Injectable()
-export class ItemComponent implements OnInit {
 
-  constructor(
-    public name: string,
-    public cost: number) { }
+export class ItemComponent implements OnInit {
+  public name: string
+  public cost: number
+  constructor() { }
 
   ngOnInit() {
+  }
+
+  setItem(name, cost){
+    this.name = name;
+    this.cost = cost;
   }
 
 }

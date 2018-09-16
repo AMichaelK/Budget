@@ -19,6 +19,7 @@ export class AppComponent {
   validName = true;
   validPrice = true;
   validDeposit = true;
+  currentItem: any;
   itemList = [];
 
   addPurchase(): void {
@@ -32,7 +33,9 @@ export class AppComponent {
       this.validPrice = false;
     }
     if (itemPrice && itemName) {
-      this.itemList.push(new ItemComponent(itemName, Number(itemPrice)));
+      this.currentItem = new ItemComponent()
+      this.currentItem.setItem(itemName, Number(itemPrice));
+      this.itemList.push(this.currentItem);
       this.spendingTotal -= Number((<HTMLInputElement>document.getElementById('inputPrice')).value);
       this.solveNet();
       (<HTMLInputElement>document.getElementById('inputName')).value = '';
