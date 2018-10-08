@@ -1,7 +1,7 @@
 # Budget
 Welcome to Budget!
 
-This is a web app that allows users to build their budget by adding purchases, deposits, withdrawals, and allows them to export it into an excel file after.
+This is a web app that allows users to build their budget by adding purchases, deposits, withdrawals, culminates by exporting to an Excel file
 
 Thanks for checking it out!
 
