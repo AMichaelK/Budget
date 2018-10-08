@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { ExcelService } from './services/excel.service';
 
 import { AppComponent } from './app.component';
 import { ItemComponent } from './item/item.component';
@@ -12,7 +13,7 @@ import { ItemComponent } from './item/item.component';
   imports: [
     BrowserModule
   ],
-  providers: [],
+  providers: [ExcelService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ItemComponent } from './item/item.component';
+import { ExcelService } from './services/excel.service';
 
 @Component({
   selector: 'app-root',
@@ -21,6 +22,9 @@ export class AppComponent {
   validDeposit = true;
   currentItem: any;
   itemList = [];
+  data: any = []
+
+  constructor(private excelService: ExcelService) { }
 
   addPurchase(): void {
     let itemName = (<HTMLInputElement>document.getElementById('inputName')).value;
@@ -42,18 +46,20 @@ export class AppComponent {
       (<HTMLInputElement>document.getElementById('inputPrice')).value = '';
       this.validName = true;
       this.validPrice = true;
+      this.addToJSON(itemName, itemPrice);
     }
   }
 
-  //   onReset(): void {
-  //     this.itemList = [];
-  //     this.spendingTotal = 0;
-  //     this.deposit = 0;
-  //     this.net = 0;
-  //   }
+  addToJSON(itemName, itemPrice) {
+    var jsonData = {
+      "Name": itemName,
+      "Price": itemPrice
+    };
+    this.data.push(jsonData);
+  }
 
+  // Updates total
   onUpdate(): void {
-
     this.currentDeposit = Number((<HTMLInputElement>document.getElementById('inputDeposit')).value);
     this.currentWithdrawal = Number((<HTMLInputElement>document.getElementById('inputWithdrawal')).value);
 
@@ -70,19 +76,22 @@ export class AppComponent {
     }
   }
 
+  // Solves for net total
   solveNet(): void {
-    console.log(this.deposit, this.spendingTotal, this.withdrawal);
     this.net = this.deposit + this.spendingTotal + this.withdrawal; //It is + because spendingTotal is already negative
   }
 
-  //   ngOnInit() {
-  //     this.itemList = [
-  //       new ItemComponent('Cheetos', 3.50),
-  //       new ItemComponent('Talenti', 4.99),
-  //       new ItemComponent('Toothbrush', 2.99)
-  //     ];
-  //     this.spendingTotal = (-3.50 - 4.99 - 2.99);
-  //     this.solveNet();
-  //   }
-  // }
+  // Exports to pdf
+  export() {
+    // Add net total
+    var jsonData = {
+      "Name": null,
+      "Price": null,
+      "Deposit": this.deposit,
+      "Withdrawal": this.withdrawal,
+      "Net": this.net
+    };
+    this.data.push(jsonData);
+    this.excelService.exportAsExcelFile(this.data, 'Budget');
+  }
 }

@@ -64,21 +64,23 @@
 </div>
 <!-- Output -->
 <div class="container-fluid" style="width: 85%; margin-top:1.5rem">
+  <button type="button" class="btn btn-outline-danger" (click)="export()">Export to Excel</button>
+  
   <div class="card-group">
-
-    <div class="card border-info mb-3" style="max-width: 30rem;">
+    
+    <div class="card border-info mb-3" style="max-width: 40rem;">
       <div class="card-header">Item</div>
       <div class="card-body">
         <h6 class="card-title" *ngFor="let item of itemList">{{item.name}}</h6>
       </div>
     </div>
-    <div class="card border-info mb-3" style="max-width: 30rem;">
+    <div class="card border-info mb-3" style="max-width: 40rem;">
       <div class="card-header">Price</div>
       <div class="card-body">
         <h6 class="card-title" *ngFor="let item of itemList">{{item.cost | currency }}</h6>
       </div>
     </div>
-    <div class="card text-white bg-info mb-3" style="max-width: 30rem;">
+    <div class="card text-white bg-info mb-3" style="max-width: 40rem;">
       <div class="card-header">Totals</div>
       <div class="card-body">
         <h6 class="card-title">Deposits: &emsp;&emsp;{{deposit | currency}}</h6>
