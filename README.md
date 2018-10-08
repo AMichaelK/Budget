@@ -1,6 +1,15 @@
 # Budget
+Welcome to Budget!
+This is a web app that allows users to build their budget by adding purchases, deposits, withdrawals, and allows them to export it into an excel file after.
+
+Thanks for checking it out!
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.0.5.
+
+## How to install and run
+1) Git clone
+2) npm install
+3) ng serve
 
 ## Development server
 
